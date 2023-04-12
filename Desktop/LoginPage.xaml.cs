@@ -15,7 +15,7 @@ public partial class LoginPage
 		SemanticScreenReader.Announce(LoginButton.Text);
 
 		await Task.Delay(1000);
-		await Navigation.PushAsync(new MainPage(), true);
+		await Navigation.PushAsync(new MainPage());
 	}
 }
 
