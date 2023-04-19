@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Evoting_Backend.Controllers
 {
@@ -64,6 +63,13 @@ namespace Evoting_Backend.Controllers
         }
 
 
+
+        [HttpPost]
+        public Task<ActionResult> NewElection(Election election)
+        {
+            
+            return Task.FromResult<ActionResult>(StatusCode(StatusCodes.Status202Accepted));
+        }
     }
 
 }
