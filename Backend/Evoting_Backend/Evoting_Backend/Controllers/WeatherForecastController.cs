@@ -1,44 +1,53 @@
+using Evoting_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 using static System.Collections.Specialized.BitVector32;
 
 namespace Evoting_Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class ElectionController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
+        private readonly IConfiguration _configuration;
+        public ElectionController(IConfiguration configuration)
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
+            _configuration = configuration;
         }
 
-        //[HttpGet(Name = "GetWeatherForecast")]
-        //public IEnumerable<WeatherForecast> Get()
-        //{
-        //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        //    {
-        //        Date = DateTime.Now.AddDays(index),
-        //        TemperatureC = Random.Shared.Next(-20, 55),
-        //        Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        //    })
-        //    .ToArray();
-        //}
-        [HttpGet(Name = “GetElections”)]
+        [HttpGet]
         public IEnumerable<Election> Get()
         {
-            List<Rows> result = databaseContext.execute(“SELECT * FROM Elections;”);
-            foreach (Row dbRow in result)
+            var employees = GetElections();
+            return employees;
+        }
+
+        private IEnumerable<Election> GetElections()
+        {
+            var elections = new List<Election>();
+
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("EVotingDatabase")))
             {
-                // Convert dbRow into Election class, like new Election(dbRow.getInt(0), dbRow.getString(1), dbRow.getString(2))…
+                var sql = "SELECT * FROM Elections;";
+                connection.Open();
+                using SqlCommand command = new SqlCommand(sql, connection);
+                using SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var election = new Election()
+                    {
+                        ElectionId = (int)reader["electionID"],
+                        Name = reader["name"].ToString(),
+                        Description = reader["description"].ToString(),
+                        PoliticalParty = reader["politicalParty"].ToString(),
+                        Location = reader["location"].ToString(),
+                    };
+                    elections.Add(election);
+                }
             }
-            return electionList;
+
+            return elections;
         }
     }
 }
