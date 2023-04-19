@@ -1,6 +1,7 @@
 using Evoting_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using static System.Collections.Specialized.BitVector32;
 
@@ -49,5 +50,20 @@ namespace Evoting_Backend.Controllers
 
             return elections;
         }
+        private IEnumerable<Election> InsertElection()
+        {
+
+            using (var conn = new SqlConnection(yourConnectionString))
+            {
+                var cmd = new SqlCommand("insert into Foo values (@bar)", conn);
+                cmd.Parameters.AddWithValue("@bar", 17);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            return;
+        }
+
+
     }
+
 }
