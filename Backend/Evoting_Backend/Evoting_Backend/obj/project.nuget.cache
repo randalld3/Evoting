@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "fW3PLVLc9+0b9P97E3rqsETmCGYbi5Z7fBQo7GuR5srQ6XmogIPKQyAGa/nHBL6Ti2gO4z7TvQOwAour5jESYA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Floater\\source\\repos\\Evoting\\Backend\\Evoting_Backend\\Evoting_Backend\\Evoting_Backend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Floater\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\Floater\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Floater\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\Floater\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\Floater\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\Floater\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
