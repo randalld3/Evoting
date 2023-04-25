@@ -19,8 +19,8 @@ namespace Evoting_Backend.Controllers
         [HttpGet]
         public IEnumerable<Election> Get()
         {
-            var employees = GetElections();
-            return employees;
+            var elections = GetElections();
+            return elections;
         }
         private IEnumerable<Election> GetElections()
         {
@@ -83,25 +83,29 @@ namespace Evoting_Backend.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<User> Get()
+        public User Get()
         {
-            var users = GetUsers();
-            return users;
+            var person = "Bob";
+            var user = FindUser(person);
+            return user;
         }
 
-        private User FindUser(User user)
+        private User FindUser(string user)
         {
-            var users = new List<User>();
+            var ReturnUser = new User();
 
-            using (var connection = new SqlConnection(_configuration.GetConnectionString("EVotingDatabase")))
+
+            using (var conn = new SqlConnection(_configuration.GetConnectionString("EVotingDatabase")))
             {
-                var sql = "SELECT * FROM Elections where username=username;";
-                connection.Open();
-                using SqlCommand command = new SqlCommand(sql, connection);
+                var sql = "SELECT * FROM Elections where username = values (@username);";
+                conn.Open();
+                using SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@username", user);
+
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var user = new User()
+                    ReturnUser = new User()
                     {
                         VoterId = (int)reader["voterID"],
                         Name = reader["name"].ToString().Trim(),
@@ -112,11 +116,9 @@ namespace Evoting_Backend.Controllers
                         RecoveryQuestion = reader["recoveryQuestion"].ToString().Trim(),
                         RecoveryAnswer = reader["recoveryAnswer"].ToString().Trim(),
                     };
-                    users.Add(user);
                 }
             }
-
-            return users;
+            return ReturnUser;
         }
         private int InsertUser(User user)
         {
@@ -165,7 +167,7 @@ namespace Evoting_Backend.Controllers
 
             using (var connection = new SqlConnection(_configuration.GetConnectionString("EVotingDatabase")))
             {
-                var sql = "SELECT * FROM Votes;";
+                var sql = "SELECT * FROM VotesCast;";
                 connection.Open();
                 using SqlCommand command = new SqlCommand(sql, connection);
                 using SqlDataReader reader = command.ExecuteReader();
@@ -195,7 +197,7 @@ namespace Evoting_Backend.Controllers
         {
             using (var conn = new SqlConnection(_configuration.GetConnectionString("EVotingDatabase")))
             {
-                var cmd = new SqlCommand("insert into Votes values (@voterID, @id1, @id1Vote, @id2, @id2Vote, @id3, @id3Vote, @id4, @id4Vote, @id5, @id5Vote)", conn);
+                var cmd = new SqlCommand("insert into VotesCast values (@voterID, @id1, @id1Vote, @id2, @id2Vote, @id3, @id3Vote, @id4, @id4Vote, @id5, @id5Vote)", conn);
                 cmd.Parameters.AddWithValue("@voterID", vote.VoterId);
                 cmd.Parameters.AddWithValue("@id1", vote.Id1);
                 cmd.Parameters.AddWithValue("@id1Vote", vote.Id1Vote);
