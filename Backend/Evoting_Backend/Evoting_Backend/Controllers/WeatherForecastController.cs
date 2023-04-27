@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 namespace Evoting_Backend.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]")]/*
     public class ElectionController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -72,7 +72,7 @@ namespace Evoting_Backend.Controllers
             return Task.FromResult<ActionResult>(StatusCode(StatusCodes.Status202Accepted));
         }
 
-    }
+    }*/
 
     public class UserController : ControllerBase
     {
@@ -83,24 +83,21 @@ namespace Evoting_Backend.Controllers
         }
 
         [HttpGet]
-        public User Get()
+        public User Get(string username)
         {
-            var person = "Bob";
-            var user = FindUser(person);
+            var user = FindUser(username);
             return user;
         }
 
-        private User FindUser(string user)
+        private User FindUser(string username)
         {
             var ReturnUser = new User();
 
-
             using (var conn = new SqlConnection(_configuration.GetConnectionString("EVotingDatabase")))
             {
-                var sql = "SELECT * FROM Elections where username = values (@username);";
+                var sql = "SELECT * FROM Users where username ='" + username + "';";
                 conn.Open();
                 using SqlCommand command = new SqlCommand(sql, conn);
-                command.Parameters.AddWithValue("@username", user);
 
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -146,7 +143,7 @@ namespace Evoting_Backend.Controllers
             InsertUser(user);
             return Task.FromResult<ActionResult>(StatusCode(StatusCodes.Status202Accepted));
         }
-    }
+    }/*
     public class VotesController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -222,7 +219,7 @@ namespace Evoting_Backend.Controllers
             return Task.FromResult<ActionResult>(StatusCode(StatusCodes.Status202Accepted));
         }
 
-    }
+    }*/
 
 
 
