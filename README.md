@@ -1,7 +1,7 @@
 # Evoting
 
 This repository contains information and code for the team SMIRJ-Evoting. 
-SMIRJ's project in this repository is titled "A Web-based Electronic Voting System."
+SMIRJ's project in this repository is titled "An App-based Electronic Voting System."
 
 Project Description
 
@@ -12,11 +12,11 @@ voting,  and the winning  number  of votes  reaching  which  the  winning  candi
 determined  without  waiting  until  all  votes  are  casted  (think  about  the  presidential 
 election process). 
  
-SMIRJ is expecting  to  build  an  either  desktop  application  or  web-based  implementation 
-that is robust, user-friendly, and deployable. The system should include a user interface 
-showing the voting results (e.g., the final votes each candidate received and the winning 
-candidate,  and  possibly  the  vote  statistics  by  geographic  locations  or  political  regions) 
-for which visualizations can be employed to enhance the understanding of results. 
+SMIRJ is expecting  to  build  a desktop  application that is robust, user-friendly, and deployable. 
+The system should include a user interface showing the voting results (e.g., the final votes each 
+candidate received and the winning candidate,  and  possibly  the  vote  statistics  by  geographic 
+locations  or  political  regions) for which visualizations can be employed to enhance the 
+understanding of results. 
 
 Team Info
 
