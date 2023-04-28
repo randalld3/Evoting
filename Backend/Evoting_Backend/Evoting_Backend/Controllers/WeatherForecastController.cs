@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 namespace Evoting_Backend.Controllers
 {
     [ApiController]
-    [Route("[controller]")]/*
+    [Route("[controller]")]/
     public class ElectionController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -72,7 +72,7 @@ namespace Evoting_Backend.Controllers
             return Task.FromResult<ActionResult>(StatusCode(StatusCodes.Status202Accepted));
         }
 
-    }*/
+    }
 
     public class UserController : ControllerBase
     {
@@ -143,7 +143,19 @@ namespace Evoting_Backend.Controllers
             InsertUser(user);
             return Task.FromResult<ActionResult>(StatusCode(StatusCodes.Status202Accepted));
         }
-    }/*
+
+        private int resetPassword(User user) //changes User's password
+        {  
+            using (var conn = new SqlConnection(_configuration.GetConnectionString("EVotingDatabase")))
+            {
+                var cmd = new SqlCommand("insert into Users values (@password)", conn);
+                cmd.Parameters.AddWithValue("@password", user.Password);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            return 0;
+        }
+    }
     public class VotesController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -219,7 +231,7 @@ namespace Evoting_Backend.Controllers
             return Task.FromResult<ActionResult>(StatusCode(StatusCodes.Status202Accepted));
         }
 
-    }*/
+    }
 
 
 
