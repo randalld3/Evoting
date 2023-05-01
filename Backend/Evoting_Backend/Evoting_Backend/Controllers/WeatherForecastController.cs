@@ -1,8 +1,10 @@
+using System;
 using Evoting_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Evoting_Backend.Controllers
 {
@@ -134,7 +136,7 @@ namespace Evoting_Backend.Controllers
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
-            return 0;
+            return user.VoterID;
         }
 
         [HttpPost]
@@ -230,6 +232,41 @@ namespace Evoting_Backend.Controllers
             InsertVote(vote);
             return Task.FromResult<ActionResult>(StatusCode(StatusCodes.Status202Accepted));
         }
+
+    }
+    public class testController : ControllerBase
+    {
+        using UserController;
+        private readonly IConfiguration _configuration;
+        public testController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        [TestMethod]
+        public void testInsertUserAndFindUser() //insertUser() function in UserController should return new user ID
+        {
+            User testuser;
+            int returnValue = InsertUser(testuser);
+            if (returnValue > 0)
+            {
+                Console.WriteLine("InsertUser() works as expected");
+            }
+            else
+            {
+            Console.WriteLine("InsertUser() does not work as expected");
+            }
+
+            User returnUserVal = Get("testuser");
+            if (returnUserVal.Name == "testuser")
+            {
+                Console.WriteLine("FindUser() works as expected");
+            }
+            else
+            {
+                Console.WriteLine("FindUser() does not works as expected");
+            }
+        }
+        
 
     }
 
