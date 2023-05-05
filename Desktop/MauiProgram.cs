@@ -4,6 +4,8 @@ namespace Desktop;
 
 public static class MauiProgram
 {
+	public static readonly HttpClient Client = new HttpClient();
+	
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();

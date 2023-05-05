@@ -16,10 +16,10 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public User Get(string username)
+    public ActionResult<User> Get(string username)
     {
         var user = FindUser(username);
-        return user;
+        return user != null ? user : NotFound();
     }
 
     private User FindUser(string username)
@@ -33,9 +33,13 @@ public class UserController : ControllerBase
             using SqlCommand command = new SqlCommand(sql, conn);
 
             using SqlDataReader reader = command.ExecuteReader();
+            if (!reader.HasRows)
+            {
+                return null;
+            }
             while (reader.Read())
             {
-                ReturnUser = new User()
+                ReturnUser = new User
                 {
                     VoterId = (int)reader["voterID"],
                     Name = reader["name"].ToString().Trim(),
